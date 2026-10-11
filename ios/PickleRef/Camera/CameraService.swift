@@ -170,7 +170,7 @@ final class CameraService: NSObject, AVCaptureVideoDataOutputSampleBufferDelegat
             // simply keep auto exposure; the POC still functions.
             let maxDuration = CMTime(value: 1, timescale: 1000)
             if CMTimeCompare(device.activeFormat.maxExposureDuration, maxDuration) > 0 {
-                device.activeVideoMaxExposureDuration = maxDuration
+                device.activeMaxExposureDuration = maxDuration
             }
         }
     }
