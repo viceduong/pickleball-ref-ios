@@ -168,7 +168,7 @@ final class BallDetector {
             let cx = CGFloat(comp.sumX) / CGFloat(comp.area) * CGFloat(ds)
             let cy = CGFloat(comp.sumY) / CGFloat(comp.area) * CGFloat(ds)
             let dist = hypot(cx - prior.x, cy - prior.y)
-            let bonus = max(0, 1 - dist / 400)
+            let bonus = max(Float(0), Float(1 - dist / 400))
             confidence = min(Float(1), confidence * 0.7 + bonus * 0.3)
         }
 
