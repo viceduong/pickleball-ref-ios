@@ -1,0 +1,16 @@
+name: PickleRef
+options:
+  bundleIdPrefix: com.pickleref
+  deploymentTarget:
+    iOS: "15.0"
+targets:
+  PickleRef:
+    type: application
+    platform: iOS
+    sources:
+      - PickleRef
+    settings:
+      base:
+        INFOPLIST_KEY_NSCameraUsageDescription: "PickleRef uses the camera to detect ball bounces and make line calls."
+        SWIFT_VERSION: "5.7"
+        TARGETED_DEVICE_FAMILY: "1,2"
