@@ -10,7 +10,7 @@ final class PipelineEngine {
 
     struct Handlers {
         /// Called on the capture queue for lightweight per-frame telemetry.
-        var telemetry: ((fps: Double, trackConfidence: Float) -> Void)?
+        var telemetry: ((_ fps: Double, _ trackConfidence: Float) -> Void)?
         /// Called when a line call is made (already hopped to main).
         var onCall: ((LineCall) -> Void)?
         var onStatus: ((String) -> Void)?
