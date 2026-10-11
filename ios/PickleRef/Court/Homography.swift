@@ -192,8 +192,8 @@ struct Homography {
             guard best > 1e-12 else { return nil }
             if pivotRow != col {
                 for c in 0..<9 {
-                    swap(&a[pivotRow*9+c], &a[col*9+c])
-                    swap(&inv[pivotRow*9+c], &inv[col*9+c])
+                    a.swapAt(pivotRow*9+c, col*9+c)
+                    inv.swapAt(pivotRow*9+c, col*9+c)
                 }
             }
             let pivot = a[col*9+col]
