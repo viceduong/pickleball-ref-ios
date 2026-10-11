@@ -69,8 +69,8 @@ final class RefereeViewModel: ObservableObject {
         guard calibrationPoints.count < 4 else { return }
         calibrationPoints.append(normalized)
         if calibrationPoints.count == 4 {
-            let size = CGSize(width: camera.dimensions.width,
-                              height: camera.dimensions.height)
+            let size = CGSize(width: CGFloat(camera.dimensions.width),
+                              height: CGFloat(camera.dimensions.height))
             if engine.calibrate(normalizedPoints: calibrationPoints, captureSize: size) {
                 runState = .running
                 statusMessage = "Calibrated. Officiating near half."

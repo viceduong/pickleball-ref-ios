@@ -155,7 +155,7 @@ final class CameraService: NSObject, AVCaptureVideoDataOutputSampleBufferDelegat
 
         let fps = min(chosen.fps, Double(config.targetFrameRate))
         let duration = CMTime(value: 1, timescale: CMTimeScale(fps.rounded()))
-        if device.activeFormat.supportedFrameRateRanges.contains(where: {
+        if chosen.format.videoSupportedFrameRateRanges.contains(where: {
             $0.minFrameRate <= fps && $0.maxFrameRate >= fps
         }) {
             device.activeVideoMinFrameDuration = duration
@@ -169,7 +169,7 @@ final class CameraService: NSObject, AVCaptureVideoDataOutputSampleBufferDelegat
             // Clamp exposure to <= 1/1000 s to cut motion blur. On failure we
             // simply keep auto exposure; the POC still functions.
             let maxDuration = CMTime(value: 1, timescale: 1000)
-            if device.activeFormat.maxExposureDuration > maxDuration {
+            if device.maxExposureDuration > maxDuration {
                 device.activeVideoMaxExposureDuration = maxDuration
             }
         }
@@ -181,7 +181,7 @@ final class CameraService: NSObject, AVCaptureVideoDataOutputSampleBufferDelegat
                        didOutput sampleBuffer: CMSampleBuffer,
                        from connection: AVCaptureConnection) {
         guard let buffer = sampleBuffer.imageBuffer,
-              CMSampleBufferGetIsValid(sampleBuffer) else { return }
+              CMSampleBufferIsValid(sampleBuffer) else { return }
         let frame = VideoFrame(pixelBuffer: buffer, time: CMSampleBufferGetPresentationTimeStamp(sampleBuffer))
         onFrame?(frame)
     }

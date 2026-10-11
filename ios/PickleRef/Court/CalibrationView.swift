@@ -11,14 +11,19 @@ struct CalibrationView: View {
     var body: some View {
         GeometryReader { geo in
             ZStack {
-                // Tap surface over the live preview.
+                // Tap surface over the live preview. iOS 15-compatible:
+                // DragGesture(minimumDistance: 0) reports location in local
+                // coordinates (onTapGesture(coordinateSpace:) is iOS 17+).
                 Rectangle()
                     .fill(.clear)
                     .contentShape(Rectangle())
-                    .onTapGesture { location in
-                        vm.addCalibrationPoint(CGPoint(x: location.x / geo.size.width,
-                                                       y: location.y / geo.size.height))
-                    }
+                    .gesture(DragGesture(minimumDistance: 0).onEnded { value in
+                        let local = value.location
+                        let frame = value.startLocation
+                        _ = frame
+                        vm.addCalibrationPoint(CGPoint(x: local.x / geo.size.width,
+                                                       y: local.y / geo.size.height))
+                    })
 
                 // Tap markers + connecting quad outline.
                 ForEach(Array(vm.calibrationPoints.enumerated()), id: \.offset) { idx, p in
